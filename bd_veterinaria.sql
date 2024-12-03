@@ -1,8 +1,8 @@
+drop database bd_veterinaria;
+
 create database bd_veterinaria;
 
 use bd_veterinaria;
-
-drop database bd_veterinaria;
 
 create table tipo_usuario(
 id_tipo_usu int auto_increment primary key not null ,
@@ -34,6 +34,8 @@ insert into tb_usuario (nom_usu, ape_usu, email_usu, contra_usu, fono_usu, direc
 				values ( 'Mariana','Wisman','Mariana@gmail.com','holamundo123','123456789', 'Ate',2);
 insert into tb_usuario (nom_usu, ape_usu, email_usu, contra_usu, fono_usu, direc_usu, id_tipo_usu)  
 				values ( 'Katerina','Garay','kate@gmail.com','123','987456123', 'San Miguel',1);
+insert into tb_usuario (nom_usu, ape_usu, email_usu, contra_usu, fono_usu, direc_usu, id_tipo_usu)  
+				values ( 'Piero','Caro','piero@gmail.com','Piero123','999888777', 'Rimac',2);
                 
 
 create table tb_especie(

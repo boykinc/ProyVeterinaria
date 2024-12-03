@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.serviceImpl.HistorialServiceImpl;
 import com.example.demo.serviceImpl.UsuarioServiceImpl;
 
 @RestController
@@ -24,5 +25,16 @@ public class AuthorityController {
 		
 		return service.listUsuarios();
 	}
+	
+	@Autowired
+	private HistorialServiceImpl histoService;
+	
+	@GetMapping("/historiales")
+	public ResponseEntity<Map<String, Object>> ListaHistoriales(){
+		
+		return histoService.listHistoriales();
+		
+	}
+	
 	
 }
