@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.serviceImpl.EspecialidadServiceImpl;
 import com.example.demo.serviceImpl.HistorialServiceImpl;
 import com.example.demo.serviceImpl.UsuarioServiceImpl;
+import com.example.demo.serviceImpl.VeterinarioServiceImpl;
 
 @RestController
 @RequestMapping("/auth")
@@ -36,5 +38,27 @@ public class AuthorityController {
 		
 	}
 	
+	
+	//Veterinario y especialidad
+	
+	@Autowired
+	private VeterinarioServiceImpl veteService;
+	
+	@GetMapping("/veterinarios")
+	public ResponseEntity<Map<String, Object>> ListaVeterinarios(){
+		
+		return veteService.listVeterinarios();
+		
+	}
+	
+	@Autowired
+	private EspecialidadServiceImpl especialidadService;
+	
+	@GetMapping("/especialidades")
+	public ResponseEntity<Map<String, Object>> ListaEspecialidades(){
+		
+		return especialidadService.listEspecialidades();
+		
+	}
 	
 }
