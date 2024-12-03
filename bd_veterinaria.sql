@@ -9,6 +9,9 @@ id_tipo_usu int auto_increment primary key not null ,
 descrip_tipo varchar(50) not null
 );
 
+select * from tipo_usuario;
+insert into tipo_usuario (id_tipo_usu , descrip_tipo)  values (1 ,'USER');
+insert into tipo_usuario (id_tipo_usu , descrip_tipo)  values (2 ,'ADMIN');
 
 create table tb_usuario(
 id_usuario int auto_increment primary key not null , 
@@ -22,10 +25,16 @@ id_tipo_usu int not null ,
 foreign key (id_tipo_usu) references tipo_usuario(id_tipo_usu)
 );
 
+/*creen un usuario por persona, por el momento se realizara de esta manera
+despues tendremos que modificar lo que es el encriptamiento del pwd */
+
 select * from tb_usuario;
-select * from tipo_usuario;
 
-
+insert into tb_usuario (nom_usu, ape_usu, email_usu, contra_usu, fono_usu, direc_usu, id_tipo_usu)  
+				values ( 'Mariana','Wisman','Mariana@gmail.com','holamundo123','123456789', 'Ate',2);
+insert into tb_usuario (nom_usu, ape_usu, email_usu, contra_usu, fono_usu, direc_usu, id_tipo_usu)  
+				values ( 'Katerina','Garay','kate@gmail.com','123','987456123', 'San Miguel',1);
+                
 
 create table tb_especie(
 id_especie int auto_increment primary key not null,
@@ -93,5 +102,3 @@ id_veterinario int not null,
 foreign key (id_mascota) references tb_mascota(id_mascota),
 foreign key (id_veterinario) references tb_veterinario(id_veterinario)
 );
-
-
