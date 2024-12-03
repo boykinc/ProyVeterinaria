@@ -71,6 +71,13 @@ foreign key (id_especialidad) references tb_especialidad(id_especialidad),
 foreign key (id_usuario) references tb_usuario(id_usuario)
 );
 
+create table tb_servicios(
+id_servicio int auto_increment primary key not null ,
+nombre_servi varchar(100) not null,
+des_servi varchar(50) not null ,
+precio		decimal(10,2) not null 
+);
+
 create table tb_cita(
 id_cita int auto_increment primary key not null,
 id_mascota int not null,
@@ -85,14 +92,6 @@ foreign key (id_mascota) references tb_mascota(id_mascota),
 foreign key (id_veterinario) references tb_veterinario(id_veterinario)
 );
 
-create table tb_servicios(
-id_servicio int auto_increment primary key not null ,
-nombre_servi varchar(100) not null,
-des_servi varchar(50) not null ,
-precio		decimal(10,2) not null 
-);
-
-
 create table tb_historial(
 id_historial int auto_increment primary key not null ,
 fec_histo	datetime not null,
@@ -104,3 +103,5 @@ id_veterinario int not null,
 foreign key (id_mascota) references tb_mascota(id_mascota),
 foreign key (id_veterinario) references tb_veterinario(id_veterinario)
 );
+
+select * from tb_usuario;
