@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.serviceImpl.EspecialidadServiceImpl;
+import com.example.demo.serviceImpl.EspecieServiceImpl;
 import com.example.demo.serviceImpl.HistorialServiceImpl;
+import com.example.demo.serviceImpl.MascotaServiceImpl;
 import com.example.demo.serviceImpl.UsuarioServiceImpl;
 import com.example.demo.serviceImpl.VeterinarioServiceImpl;
+
 
 @RestController
 @RequestMapping("/auth")
@@ -60,5 +63,22 @@ public class AuthorityController {
 		return especialidadService.listEspecialidades();
 		
 	}
+	
+	//Especie y Mascota
+	
+		@Autowired
+		private EspecieServiceImpl especieService;
+		
+		@GetMapping("/especies")
+		public ResponseEntity<Map<String, Object>> listEspecies(){
+			return especieService.listEspecies();
+		}
+		
+		
+		@Autowired
+		private MascotaServiceImpl mascotaService;
+		public ResponseEntity<Map<String, Object>> listMascotas(){
+			return mascotaService.listMascotas();
+		}
 	
 }
