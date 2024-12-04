@@ -36,6 +36,8 @@ insert into tb_usuario (nom_usu, ape_usu, email_usu, contra_usu, fono_usu, direc
 				values ( 'Katerina','Garay','kate@gmail.com','123','987456123', 'San Miguel',1);
 insert into tb_usuario (nom_usu, ape_usu, email_usu, contra_usu, fono_usu, direc_usu, id_tipo_usu)  
 				values ( 'Piero','Caro','piero@gmail.com','Piero123','999888777', 'Rimac',2);
+insert into tb_usuario (nom_usu, ape_usu, email_usu, contra_usu, fono_usu, direc_usu, id_tipo_usu)  
+				values ( 'Favio','Condor','favio@gmail.com','Ah123','999999999', 'San Martin de Porres',2);
                 
 
 create table tb_especie(
