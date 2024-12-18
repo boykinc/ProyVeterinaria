@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.serviceImpl.EspecialidadServiceImpl;
 import com.example.demo.serviceImpl.EspecieServiceImpl;
-import com.example.demo.serviceImpl.HistorialServiceImpl;
+
 import com.example.demo.serviceImpl.MascotaServiceImpl;
 import com.example.demo.serviceImpl.UsuarioServiceImpl;
 import com.example.demo.serviceImpl.VeterinarioServiceImpl;
@@ -31,16 +31,6 @@ public class AuthorityController {
 	public ResponseEntity<Map<String, Object>> ListaUsuarios(){
 		
 		return service.listUsuarios();
-	}
-	
-	@Autowired
-	private HistorialServiceImpl histoService;
-	
-	@GetMapping("/historiales")
-	public ResponseEntity<Map<String, Object>> ListaHistoriales(){
-		
-		return histoService.listHistoriales();
-		
 	}
 	
 	

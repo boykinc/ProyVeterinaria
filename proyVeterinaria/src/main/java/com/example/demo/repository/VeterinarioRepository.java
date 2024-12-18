@@ -15,4 +15,5 @@ public interface VeterinarioRepository extends JpaRepository<Veterinario, Long>{
 	List<Veterinario> findAllByEstado(String activo);
 	
 	Veterinario findByUsuario(Usuario usuario);
+	
 }

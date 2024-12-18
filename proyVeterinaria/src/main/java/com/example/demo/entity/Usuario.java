@@ -30,15 +30,11 @@ public class Usuario {
 	
 	private String nom_usu;
 	private String ape_usu;
-	private String email_usu;
-	private String contra_usu;
 	private String fono_usu	;
 	private String direc_usu;
+	private String estado;
 	
-	@ManyToOne
-	@JoinColumn(name="id_tipo_usu")
-	private TipoUsuario tipoUsuarios;
-//	id_tipo_usu int not null ,
+
 	
 	
 }

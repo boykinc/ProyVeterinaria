@@ -111,13 +111,14 @@ public class VeterinarioServiceImpl implements VeterinarioService {
 	            .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
 	    Veterinario vetExistente = dao.findByUsuario(usuEncontrado);
-	    if(vetExistente != null) {
+	    if(vetExistente != null && usuEncontrado.getEstado().equals("A")) {
 	    	respuesta.put("mensaje", "Ya existe un veterinario registrado con el id de usuario: " + usuEncontrado.getId_usuario());
 		    respuesta.put("fecha", fecha);
 		    respuesta.put("status", HttpStatus.BAD_REQUEST);
 
 		    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
 	    }
+	  
 	    
 	    Veterinario veterinario = new Veterinario();
 	    veterinario.setEspecialidad(espEncontrada);
@@ -132,8 +133,9 @@ public class VeterinarioServiceImpl implements VeterinarioService {
 	    respuesta.put("fecha", fecha);
 	    respuesta.put("status", HttpStatus.CREATED);
 	    respuesta.put("veterinario", veterinario);
-
+	    
 	    return ResponseEntity.status(HttpStatus.CREATED).body(respuesta);
+	    
 	}
 
 	@Override
