@@ -73,5 +73,90 @@ public class UsuarioServiceImpl implements UsuarioService {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
 		}
 	}
+	
+	
+	
+	@Override
+	public ResponseEntity<Map<String, Object>> agregaUsuario(Usuario usuario) {
+	    Map<String, Object> response = new HashMap<>();
+	    try {
+	        usuario.setEstado("A");
+	        
+	        Usuario usuarioGuardado = dao.save(usuario);
+
+	        response.put("mensaje", "Usuario creado exitosamente.");
+	        response.put("usuario", usuarioGuardado);
+	        return ResponseEntity.ok(response);
+	    } catch (Exception e) {
+	        
+	        response.put("mensaje", "Error al crear el usuario.");
+	        response.put("error", e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	    }
+	}
+
+
+	@Override
+	public ResponseEntity<Map<String, Object>> actualizaUsuario(Usuario usuario, Long id) {
+	    Map<String, Object> response = new HashMap<>();
+	    try {
+	        Optional<Usuario> usuarioExistente = dao.findById(id);
+
+	        if (usuarioExistente.isPresent()) {
+	            
+	            Usuario usuarioActualizado = usuarioExistente.get();
+	            usuarioActualizado.setNom_usu(usuario.getNom_usu());
+	            usuarioActualizado.setApe_usu(usuario.getApe_usu());
+	            usuarioActualizado.setFono_usu(usuario.getFono_usu());
+	            usuarioActualizado.setDirec_usu(usuario.getDirec_usu());
+	            usuarioActualizado.setEstado(usuario.getEstado());
+
+	            Usuario usuarioGuardado = dao.save(usuarioActualizado);
+
+	            response.put("mensaje", "Usuario actualizado exitosamente.");
+	            response.put("usuario", usuarioGuardado);
+	            return ResponseEntity.ok(response);
+	        } else {
+	            response.put("mensaje", "Usuario no encontrado.");
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+	        }
+	    } catch (Exception e) {
+	        response.put("mensaje", "Error al actualizar el usuario.");
+	        response.put("error", e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	    }
+	}
+
+	@Override
+	public ResponseEntity<Map<String, Object>> eliminarUsuarioLogico(Long id) {
+	    Map<String, Object> response = new HashMap<>();
+	    try {
+	        Optional<Usuario> usuarioExistente = dao.findById(id);
+
+	        if (usuarioExistente.isPresent()) {
+	            Usuario usuario = usuarioExistente.get();
+	            
+	            if ("A".equals(usuario.getEstado())) {
+	                usuario.setEstado("I");
+	                
+	                dao.save(usuario);
+
+	                response.put("mensaje", "Usuario eliminado lógicamente (estado cambiado a 'I').");
+	                response.put("usuario", usuario);
+	                return ResponseEntity.ok(response);
+	            } else {
+	                response.put("mensaje", "El usuario ya está inactivo.");
+	                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+	            }
+	        } else {
+	            response.put("mensaje", "Usuario no encontrado.");
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+	        }
+	    } catch (Exception e) {
+	        response.put("mensaje", "Error al realizar la eliminación lógica del usuario.");
+	        response.put("error", e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	    }
+	}
 
 }
