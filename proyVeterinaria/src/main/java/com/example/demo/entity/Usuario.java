@@ -27,18 +27,11 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_usuario;
 	
-	
 	private String nom_usu;
 	private String ape_usu;
-	private String email_usu;
-	private String contra_usu;
 	private String fono_usu	;
 	private String direc_usu;
-	
-	@ManyToOne
-	@JoinColumn(name="id_tipo_usu")
-	private TipoUsuario tipoUsuarios;
-//	id_tipo_usu int not null ,
+	private String estado;
 	
 	
 }

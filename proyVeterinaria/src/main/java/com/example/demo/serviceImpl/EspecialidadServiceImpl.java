@@ -29,7 +29,7 @@ public class EspecialidadServiceImpl implements EspecialidadService{
 			respuesta.put("mensaje", "Lista de Especialidades");
 			respuesta.put("fecha", new Date());
 			respuesta.put("status", HttpStatus.OK);
-			respuesta.put("Especialidades", especialidades);
+			respuesta.put("especialidades", especialidades);
 			return ResponseEntity.status(HttpStatus.OK).body(respuesta);
 		} else {
 			respuesta.put("mensaje", "No existen registros");

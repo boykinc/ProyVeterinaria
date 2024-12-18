@@ -57,7 +57,6 @@ public class VeterinarioServiceImpl implements VeterinarioService {
 		}
 	}
 
-
 	@Override
 	public ResponseEntity<Map<String, Object>> listarVeterinariosActivos() {
 		Map<String, Object> respuesta = new HashMap<>();
@@ -76,7 +75,6 @@ public class VeterinarioServiceImpl implements VeterinarioService {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
 		}
 	}
-
 
 	@Override
 	public ResponseEntity<Map<String, Object>> buscarVeterinarioPorId(Long id) {
@@ -99,7 +97,6 @@ public class VeterinarioServiceImpl implements VeterinarioService {
 		}
 	}
 
-
 	@Override
 	@Transactional
 	public ResponseEntity<Map<String, Object>> agregarVeterinario(VeterinarioDTO veterinarioDTO) {
@@ -119,14 +116,20 @@ public class VeterinarioServiceImpl implements VeterinarioService {
 		    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
 	    }
 	    
+	    if(usuEncontrado.getEstado().equals("I")) {
+	    	respuesta.put("mensaje", "El usuario no puede ser registrado como veterinario porque se encuentra inactivo");
+		    respuesta.put("fecha", fecha);
+		    respuesta.put("status", HttpStatus.BAD_REQUEST);
+
+		    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
+	    }
+	    
 	    Veterinario veterinario = new Veterinario();
 	    veterinario.setEspecialidad(espEncontrada);
 	    veterinario.setUsuario(usuEncontrado);
 	    veterinario.setEstado(veterinarioDTO.getEstado());
 
 	    dao.save(veterinario);
-
-	    System.out.println("ID Veterinario asignado automáticamente: " + veterinario.getId_veterinario());
 
 	    respuesta.put("mensaje", "Se ha agregado correctamente el veterinario");
 	    respuesta.put("fecha", fecha);
@@ -147,6 +150,15 @@ public class VeterinarioServiceImpl implements VeterinarioService {
 	    Usuario usuEncontrado = daoUsu.findById(veterinarioDTO.getId_usuario())
 	            .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 		
+	    Veterinario vetExistente = dao.findByUsuario(usuEncontrado);
+	    if(vetExistente != null) {
+	    	respuesta.put("mensaje", "Ya existe un veterinario registrado con el id de usuario: " + usuEncontrado.getId_usuario());
+		    respuesta.put("fecha", fecha);
+		    respuesta.put("status", HttpStatus.BAD_REQUEST);
+
+		    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
+	    }
+	    
 		if(vetEncontrado.isPresent()) {
 			Veterinario vet = vetEncontrado.get();
 			vet.setEspecialidad(espEncontrada);
@@ -170,7 +182,6 @@ public class VeterinarioServiceImpl implements VeterinarioService {
 		}
 	}
 
-
 	@Override
 	public ResponseEntity<Map<String, Object>> eliminarVeterinarioLogico(Long id) {
 		Map<String,Object> respuesta = new HashMap<>();
@@ -193,7 +204,4 @@ public class VeterinarioServiceImpl implements VeterinarioService {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
 		}
 	}
-
-
-	
 }

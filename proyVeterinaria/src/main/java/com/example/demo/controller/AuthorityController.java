@@ -33,6 +33,12 @@ public class AuthorityController {
 		return service.listUsuarios();
 	}
 	
+	@GetMapping("/usuarios/estado")
+	public ResponseEntity<Map<String, Object>> ListarPorEstado(){
+		
+		return service.listarUsuariosActivos();
+	}
+	
 	@Autowired
 	private HistorialServiceImpl histoService;
 	

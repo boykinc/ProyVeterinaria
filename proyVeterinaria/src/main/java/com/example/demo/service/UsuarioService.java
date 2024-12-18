@@ -7,4 +7,6 @@ import org.springframework.http.ResponseEntity;
 public interface UsuarioService {
 
 	public  ResponseEntity<Map<String , Object>> listUsuarios();
+	
+	public ResponseEntity<Map<String , Object>> listarUsuariosActivos();
 }
