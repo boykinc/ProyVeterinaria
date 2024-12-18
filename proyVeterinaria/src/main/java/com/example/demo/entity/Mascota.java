@@ -22,30 +22,19 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "tb_mascota")
-@AllArgsConstructor
-@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Mascota {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id_mascota;
+	private Long id_mascota;
 	private String nom_masco;
-	
-	//id_especie  int not null
-	
 	private String raza;
 	private String sexo;
-	private LocalDateTime fec_nac;
-	
-	@Column(name = "precio", nullable = false, precision = 10, scale = 2)
-	private BigDecimal precio;
-	
-	//id_usuario  int not null
-	
-	/*@ManyToOne
-	@JoinColumn(name = "id_usuario", nullable = false)
-	private Usuario usuario;*/
+	private int edad;
+	private double peso_masco;
+	private String propietario;
+	private String estado;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_especie", nullable = false)

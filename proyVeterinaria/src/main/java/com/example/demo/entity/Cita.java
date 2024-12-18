@@ -48,9 +48,6 @@ public class Cita {
 
 	private String estado;
 
-	// Relación con la entidad Servicio
-	@ManyToOne
-	@JoinColumn(name = "id_servicio", nullable = false)
-	private Servicio servicio;
+
 	
 }
