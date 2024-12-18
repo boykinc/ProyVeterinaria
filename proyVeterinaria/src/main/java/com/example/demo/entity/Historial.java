@@ -33,15 +33,15 @@ public class Historial {
 	private String trata_histo;
 	private String obser_histo;
 	
-	/*
+	
 	@ManyToOne
 	@JoinColumn(name = "id_mascota", nullable = false)
 	private Mascota mascota;
-	*/
 	
-	/*
+	
+	
 	@ManyToOne
 	@JoinColumn(name = "id_veterinario", nullable = false)
 	private Veterinario veterinario;
-	*/
+	
 }

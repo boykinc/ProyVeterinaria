@@ -1,109 +1,148 @@
-drop database bd_veterinaria;
+-- Base de datos: `bd_veterinaria`
+--
+-- Estructura de tabla para la tabla `tipo_usuario`
+--
 
-create database bd_veterinaria;
+CREATE DATABASE bd_veterinaria;
 
-use bd_veterinaria;
+USE bd_veterinaria;
 
-create table tipo_usuario(
-id_tipo_usu int auto_increment primary key not null ,
-descrip_tipo varchar(50) not null
+CREATE TABLE IF NOT EXISTS `tipo_usuario` (
+  `id_tipo_usu` int(11) NOT NULL AUTO_INCREMENT,
+  `descrip_tipo` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_tipo_usu`)
 );
 
-select * from tipo_usuario;
-insert into tipo_usuario (id_tipo_usu , descrip_tipo)  values (1 ,'USER');
-insert into tipo_usuario (id_tipo_usu , descrip_tipo)  values (2 ,'ADMIN');
+--
+-- Volcado de datos para la tabla `tipo_usuario`
+--
 
-create table tb_usuario(
-id_usuario int auto_increment primary key not null , 
-nom_usu varchar(50) not null ,
-ape_usu varchar(50) not null ,
-email_usu varchar(50) not null unique ,
-contra_usu varchar(50) not null ,
-fono_usu	char(9) not null ,
-direc_usu	varchar(50) not null ,
-id_tipo_usu int not null ,
-foreign key (id_tipo_usu) references tipo_usuario(id_tipo_usu)
+INSERT INTO `tipo_usuario` (`id_tipo_usu`, `descrip_tipo`) VALUES
+(1, 'USER'),
+(2, 'ADMIN'),
+(3, 'MEDICO');
+
+--
+-- Estructura de tabla para la tabla `tb_usuario`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_usuario` (
+  `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_usu` varchar(50) NOT NULL,
+  `ape_usu` varchar(50) NOT NULL,
+  `email_usu` varchar(50) NOT NULL,
+  `contra_usu` varchar(50) NOT NULL,
+  `fono_usu` char(9) NOT NULL,
+  `direc_usu` varchar(50) NOT NULL,
+  `id_tipo_usu` int(11) NOT NULL,
+  PRIMARY KEY (`id_usuario`),
+  UNIQUE KEY `email_usu` (`email_usu`),
+  KEY `id_tipo_usu` (`id_tipo_usu`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Volcado de datos para la tabla `tb_usuario`
+--
+
+INSERT INTO `tb_usuario` (`id_usuario`, `nom_usu`, `ape_usu`, `email_usu`, `contra_usu`, `fono_usu`, `direc_usu`, `id_tipo_usu`) VALUES
+(1, 'Mariana', 'Wisman', 'Mariana@gmail.com', 'holamundo123', '123456789', 'Ate', 2),
+(2, 'Katerina', 'Garay', 'kate@gmail.com', '123', '987456123', 'San Miguel', 1),
+(3, 'Piero', 'Caro', 'piero@gmail.com', 'Piero123', '999888777', 'Rimac', 3),
+(4, 'Favio', 'Condor', 'favio@gmail.com', 'Ah123', '999999999', 'San Martin de Porres', 2),
+(5, 'Roberto', 'Salcedo', 'roberto@gmail.com', 'Roberto123', '999444999', 'Surquillo', 3);
+-- --------------------------------------------------------
+--
+-- Estructura de tabla para la tabla `tb_especie`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_especie` (
+  `id_especie` int(11) NOT NULL AUTO_INCREMENT,
+  `descrip_espe` varchar(100) NOT NULL,
+  PRIMARY KEY (`id_especie`)
 );
 
-/*creen un usuario por persona, por el momento se realizara de esta manera
-despues tendremos que modificar lo que es el encriptamiento del pwd */
+-- --------------------------------------------------------
 
-select * from tb_usuario;
+--
+-- Estructura de tabla para la tabla `tb_mascota`
+--
 
-insert into tb_usuario (nom_usu, ape_usu, email_usu, contra_usu, fono_usu, direc_usu, id_tipo_usu)  
-				values ( 'Mariana','Wisman','Mariana@gmail.com','holamundo123','123456789', 'Ate',2);
-insert into tb_usuario (nom_usu, ape_usu, email_usu, contra_usu, fono_usu, direc_usu, id_tipo_usu)  
-				values ( 'Katerina','Garay','kate@gmail.com','123','987456123', 'San Miguel',1);
-insert into tb_usuario (nom_usu, ape_usu, email_usu, contra_usu, fono_usu, direc_usu, id_tipo_usu)  
-				values ( 'Piero','Caro','piero@gmail.com','Piero123','999888777', 'Rimac',2);
-insert into tb_usuario (nom_usu, ape_usu, email_usu, contra_usu, fono_usu, direc_usu, id_tipo_usu)  
-				values ( 'Favio','Condor','favio@gmail.com','Ah123','999999999', 'San Martin de Porres',2);
-                
-
-create table tb_especie(
-id_especie int auto_increment primary key not null,
-descrip_espe varchar(100) not null
+CREATE TABLE IF NOT EXISTS `tb_mascota` (
+  `id_mascota` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_masco` varchar(50) NOT NULL,
+  `id_especie` int(11) NOT NULL,
+  `raza` varchar(40) DEFAULT NULL,
+  `sexo` char(1) DEFAULT NULL,
+  `fec_nac` datetime NOT NULL,
+  `peso_masco` decimal(10,2) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  PRIMARY KEY (`id_mascota`),
+  KEY `id_usuario` (`id_usuario`),
+  KEY `id_especie` (`id_especie`)
 );
 
+-- --------------------------------------------------------
 
-create table tb_mascota(
-id_mascota  int auto_increment primary key not null ,
-nom_masco   varchar(50) not null ,
-id_especie  int not null,
-raza		varchar(40), 
-sexo		char(1),
-fec_nac		datetime not null,
-peso_masco	decimal(10,2) not null,
-id_usuario  int not null ,
-foreign key (id_usuario) references tb_usuario(id_usuario),
-foreign key (id_especie) references tb_especie(id_especie)
+-- Estructura de tabla para la tabla `tb_especialidad`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_especialidad` (
+  `id_especialidad` int(11) NOT NULL AUTO_INCREMENT,
+  `des_especialidad` varchar(100) NOT NULL,
+  PRIMARY KEY (`id_especialidad`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Volcado de datos para la tabla `tb_especialidad`
+--
+
+INSERT INTO `tb_especialidad` (`id_especialidad`, `des_especialidad`) VALUES
+(1, 'Oftalmologia'),
+(2, 'Quimioterapia'),
+(3, 'Radiologia'),
+(4, 'Traumatologia');
+
+--
+-- Estructura de tabla para la tabla `tb_veterinario`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_veterinario` (
+  `id_veterinario` int(11) NOT NULL AUTO_INCREMENT,
+  `id_especialidad` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `estado` char(1) NOT NULL,
+  PRIMARY KEY (`id_veterinario`),
+  KEY `id_especialidad` (`id_especialidad`),
+  KEY `id_usuario` (`id_usuario`)
 );
 
-create table tb_especialidad(
-id_especialidad int auto_increment primary key not null,
-des_especialidad varchar(100) not null
-);
+--
+-- Volcado de datos para la tabla `tb_veterinario`
+--
 
-create table tb_veterinario(
-id_veterinario int auto_increment primary key not null ,
-id_especialidad int not null,
-id_usuario  int not null ,
-hora_dis	datetime,
-foreign key (id_especialidad) references tb_especialidad(id_especialidad),
-foreign key (id_usuario) references tb_usuario(id_usuario)
-);
+INSERT INTO `tb_veterinario` (`id_especialidad`, `id_usuario`, `estado`) VALUES
+(2, 3, 'A');
 
-create table tb_servicios(
-id_servicio int auto_increment primary key not null ,
-nombre_servi varchar(100) not null,
-des_servi varchar(50) not null ,
-precio		decimal(10,2) not null 
-);
+--
+-- Restricciones para tablas volcadas
+--
 
-create table tb_cita(
-id_cita int auto_increment primary key not null,
-id_mascota int not null,
-id_veterinario int not null,
-fec_cita datetime not null,
-fec_registrado TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ,
-motivo varchar(200) null ,
-estado char(3) not null ,
-id_servicio int not null,
-foreign key (id_servicio) references tb_servicios(id_servicio),
-foreign key (id_mascota) references tb_mascota(id_mascota),
-foreign key (id_veterinario) references tb_veterinario(id_veterinario)
-);
+--
+-- Filtros para la tabla `tb_mascota`
+--
+ALTER TABLE `tb_mascota`
+  ADD CONSTRAINT `tb_mascota_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `tb_usuario` (`id_usuario`),
+  ADD CONSTRAINT `tb_mascota_ibfk_2` FOREIGN KEY (`id_especie`) REFERENCES `tb_especie` (`id_especie`);
 
-create table tb_historial(
-id_historial int auto_increment primary key not null ,
-fec_histo	datetime not null,
-diagnos_histo varchar(100) not null,
-trata_histo   varchar(100) not null,
-obser_histo   varchar(100)  null,
-id_mascota int not null,
-id_veterinario int not null,
-foreign key (id_mascota) references tb_mascota(id_mascota),
-foreign key (id_veterinario) references tb_veterinario(id_veterinario)
-);
+--
+-- Filtros para la tabla `tb_usuario`
+--
+ALTER TABLE `tb_usuario`
+  ADD CONSTRAINT `tb_usuario_ibfk_1` FOREIGN KEY (`id_tipo_usu`) REFERENCES `tipo_usuario` (`id_tipo_usu`);
 
-select * from tb_usuario;
+--
+-- Filtros para la tabla `tb_veterinario`
+--
+ALTER TABLE `tb_veterinario`
+  ADD CONSTRAINT `tb_veterinario_ibfk_1` FOREIGN KEY (`id_especialidad`) REFERENCES `tb_especialidad` (`id_especialidad`),
+  ADD CONSTRAINT `tb_veterinario_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `tb_usuario` (`id_usuario`);
