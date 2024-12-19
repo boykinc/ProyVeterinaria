@@ -21,7 +21,6 @@ import com.example.demo.serviceImpl.EspecialidadServiceImpl;
 import com.example.demo.serviceImpl.EspecieServiceImpl;
 import com.example.demo.serviceImpl.MascotaServiceImpl;
 import com.example.demo.serviceImpl.UsuarioServiceImpl;
-import com.example.demo.serviceImpl.VeterinarioServiceImpl;
 
 
 @RestController
@@ -44,6 +43,13 @@ public class AuthorityController {
 		return service.listarUsuariosActivos();
 	}
 
+	@GetMapping("/usuarios/{id}")
+	public ResponseEntity<Map<String, Object>> listarPorId(@PathVariable Long id){
+
+		return service.listaUsuarioPorId(id);
+
+	}
+	
 	@PostMapping("/usuarios")
     public ResponseEntity<Map<String, Object>> crearUsuario(@RequestBody Usuario usuario) {
         return service.agregaUsuario(usuario);
@@ -56,7 +62,7 @@ public class AuthorityController {
 	    return service.actualizaUsuario(usuario, id);
 	}
 	
-	@DeleteMapping("/Usuariologico/{id}")
+	@DeleteMapping("/usuarios/{id}")
 	public ResponseEntity<Map<String, Object>> eliminarUsuarioLogico(@PathVariable Long id) {
 	    return service.eliminarUsuarioLogico(id);
 	}

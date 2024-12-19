@@ -3,6 +3,7 @@ package com.example.demo.serviceImpl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.entity.Mascota;
 import com.example.demo.entity.Usuario;
 import com.example.demo.entity.Veterinario;
 import com.example.demo.repository.UsuarioRepository;
@@ -156,6 +158,25 @@ public class UsuarioServiceImpl implements UsuarioService {
 	        response.put("mensaje", "Error al realizar la eliminación lógica del usuario.");
 	        response.put("error", e.getMessage());
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	    }
+	}
+
+	@Override
+	public ResponseEntity<Map<String, Object>> listaUsuarioPorId(Long id) {
+		Map<String, Object> respuesta = new LinkedHashMap<>();
+		Optional<Usuario> usuario = dao.findById(id);
+
+	    if (usuario.isPresent()) {
+	        respuesta.put("mensaje", "Usuario Encontrado");
+	        respuesta.put("fecha", new Date());
+	        respuesta.put("status", HttpStatus.OK);
+	        respuesta.put("usuario", usuario.get());
+	        return ResponseEntity.ok().body(respuesta);
+	    } else {
+	        respuesta.put("mensaje", "No se encuentra un registro para el ID: " + id);
+	        respuesta.put("fecha", new Date());
+	        respuesta.put("status", HttpStatus.NOT_FOUND);
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
 	    }
 	}
 

@@ -12,6 +12,8 @@ public interface UsuarioService {
 	
 	public ResponseEntity<Map<String , Object>> listarUsuariosActivos();
 	
+	public ResponseEntity<Map<String, Object>> listaUsuarioPorId(Long id);
+	
 	public ResponseEntity<Map<String, Object>> agregaUsuario(Usuario usuario);
 	
 	public ResponseEntity<Map<String, Object>> actualizaUsuario(Usuario usuario , Long id);
