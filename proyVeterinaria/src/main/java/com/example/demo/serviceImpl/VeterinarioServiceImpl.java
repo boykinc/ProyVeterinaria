@@ -108,7 +108,7 @@ public class VeterinarioServiceImpl implements VeterinarioService {
 	            .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
 	    Veterinario vetExistente = dao.findByUsuario(usuEncontrado);
-	    if(vetExistente != null && usuEncontrado.getEstado().equals("A")) {
+	    if(vetExistente != null) {
 	    	respuesta.put("mensaje", "Ya existe un veterinario registrado con el id de usuario: " + usuEncontrado.getId_usuario());
 		    respuesta.put("fecha", fecha);
 		    respuesta.put("status", HttpStatus.BAD_REQUEST);
@@ -151,15 +151,6 @@ public class VeterinarioServiceImpl implements VeterinarioService {
 	            .orElseThrow(() -> new IllegalArgumentException("Especialidad no encontrada"));
 	    Usuario usuEncontrado = daoUsu.findById(veterinarioDTO.getId_usuario())
 	            .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
-		
-	    Veterinario vetExistente = dao.findByUsuario(usuEncontrado);
-	    if(vetExistente != null) {
-	    	respuesta.put("mensaje", "Ya existe un veterinario registrado con el id de usuario: " + usuEncontrado.getId_usuario());
-		    respuesta.put("fecha", fecha);
-		    respuesta.put("status", HttpStatus.BAD_REQUEST);
-
-		    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
-	    }
 	    
 		if(vetEncontrado.isPresent()) {
 			Veterinario vet = vetEncontrado.get();
@@ -192,12 +183,40 @@ public class VeterinarioServiceImpl implements VeterinarioService {
 		if(vetEncontrado.isPresent()) {
 			Veterinario vet = vetEncontrado.get();
 			vet.setEstado("I");
+			
 			dao.save(vet);
+			
 			respuesta.put("mensaje", "Veterinario eliminado correctamente");
 			respuesta.put("fecha", fecha);
 			respuesta.put("status", HttpStatus.NO_CONTENT);
 			
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(respuesta);
+		}else {
+			respuesta.put("mensaje", "Sin registros para el ID: " + id);
+			respuesta.put("fecha", fecha);
+			respuesta.put("status", HttpStatus.NOT_FOUND);
+			
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
+		}
+	}
+
+	@Override
+	public ResponseEntity<Map<String, Object>> recuperarVeterinario(Long id) {
+		Map<String, Object> respuesta = new HashMap<>();
+		Optional<Veterinario> vetEncontrado = dao.findById(id);
+		
+		if(vetEncontrado.isPresent()) {
+			Veterinario vet = vetEncontrado.get();
+			vet.setEstado("A");
+			
+			dao.save(vet);
+			
+			respuesta.put("mensaje", "Veterinario recuperado correctamente");
+			respuesta.put("fecha", fecha);
+			respuesta.put("status", HttpStatus.CREATED);
+			respuesta.put("veterinario", vet);
+			
+			return ResponseEntity.status(HttpStatus.CREATED).body(respuesta);
 		}else {
 			respuesta.put("mensaje", "Sin registros para el ID: " + id);
 			respuesta.put("fecha", fecha);

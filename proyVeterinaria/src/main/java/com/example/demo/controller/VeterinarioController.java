@@ -66,4 +66,10 @@ public class VeterinarioController {
 		return service.eliminarVeterinarioLogico(id);
 	}
 	
+	@DeleteMapping("/recuperar/{id}")
+	public ResponseEntity<Map<String, Object>> recuperarVeterinario(@PathVariable Long id) {
+		
+		return service.recuperarVeterinario(id);
+	}
+	
 }
