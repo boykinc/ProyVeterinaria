@@ -12,5 +12,7 @@ import com.example.demo.entity.Veterinario;
 public interface MascotaRepository extends JpaRepository<Mascota, Long> {
 	
 	List<Mascota> findAllByEstado(String activo);
+	
+	
 
 }

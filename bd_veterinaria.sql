@@ -30,6 +30,8 @@ create table tb_especie(
  descrip_espe varchar(100)
 );
 
+select * from tb_especie;
+
 INSERT INTO tb_especie ( descrip_espe) VALUES
 ( 'Gato'),
 ( 'Perro'),
@@ -87,12 +89,16 @@ CREATE TABLE IF NOT EXISTS tb_especialidad (
 -- Volcado de datos para la tabla tb_especialidad
 --
 
-INSERT INTO tb_especialidad (id_especialidad, des_especialidad) VALUES
-(1, 'Oftalmologia'),
-(2, 'Quimioterapia'),
-(3, 'Radiologia'),
-(4, 'Traumatologia');
+INSERT INTO tb_especialidad ( des_especialidad) VALUES
+('Oftalmologia'),
+('Quimioterapia'),
+('Radiologia'),
+( 'Traumatologia');
 
+INSERT INTO tb_mascota (nom_masco, raza, sexo, edad, peso_masco, propietario, id_especie, estado) VALUES
+('Firulais', 'Pastor Alemán', 'M', 5, 20.50, 'Juan Pérez', 2, 'A'),
+('Whiskers', 'Siames', 'F', 3, 4.25, 'Ana Gómez', 1, 'A'),
+('Chester', 'Pitbul', 'M', 2, 25.25, 'Pedro Suarez', 2, 'I');
 
 
 create table tb_veterinario(
@@ -104,4 +110,4 @@ foreign key (id_especialidad) references tb_especialidad(id_especialidad),
 foreign key (id_usuario) references tb_usuario(id_usuario)
 );
 
-select * from tb_veterinario;
+select * from tb_especialidad;

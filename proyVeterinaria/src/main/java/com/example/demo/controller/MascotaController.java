@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Mascota;
+import com.example.demo.entity.MascotaDTO;
 import com.example.demo.serviceImpl.MascotaServiceImpl;
 
 @RestController
@@ -39,13 +40,13 @@ public class MascotaController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Map<String, Object>> agregar(@RequestBody Mascota mascota){
-		return mascotaService.agregaMascota(mascota);
+	public ResponseEntity<Map<String, Object>> agregar(@RequestBody MascotaDTO mascotaDTO){
+		return mascotaService.agregaMascota(mascotaDTO);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Map<String, Object>> editar(@RequestBody Mascota mascota, @PathVariable Long id){
-		return mascotaService.actualizaMascota(mascota, id);
+	public ResponseEntity<Map<String, Object>> editar(@RequestBody MascotaDTO mascotaDTO, @PathVariable Long id){
+		return mascotaService.actualizaMascota(mascotaDTO, id);
 	}
 	
 	@DeleteMapping("/{id}")
