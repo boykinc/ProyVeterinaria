@@ -16,7 +16,7 @@ estado		char(1) not null
 /*creen un usuario por persona, por el momento se realizara de esta manera
 despues tendremos que modificar lo que es el encriptamiento del pwd */
 
-select * from tb_usuario;
+
 
 insert into tb_usuario (nom_usu, ape_usu,fono_usu, direc_usu, estado)  
 				values ( 'Mariana','Wisman','123456789', 'Ate','A');
@@ -24,13 +24,14 @@ insert into tb_usuario (nom_usu, ape_usu,fono_usu, direc_usu, estado)
 insert into tb_usuario (nom_usu, ape_usu,fono_usu, direc_usu, estado)  
 				values ( 'Piero','Jara','123456789', 'Rimac','A');
 
-                
+select * from tb_usuario;          
+
 create table tb_especie(
  id_especie int auto_increment primary key not null,
  descrip_espe varchar(100)
 );
 
-select * from tb_especie;
+
 
 INSERT INTO tb_especie ( descrip_espe) VALUES
 ( 'Gato'),
@@ -38,6 +39,7 @@ INSERT INTO tb_especie ( descrip_espe) VALUES
 ( 'Loro'),
 ( 'Puerco');
 
+select * from tb_especie;
 
 
 /*drop table tb_usuario;
@@ -55,6 +57,11 @@ CREATE TABLE tb_mascota (
     estado char(1) not null,
     foreign key (id_especie) references tb_especie(id_especie)
 );
+
+INSERT INTO tb_mascota (nom_masco, raza, sexo, edad, peso_masco, propietario, id_especie, estado) VALUES
+('Firulais', 'Pastor Alemán', 'M', 5, 20.50, 'Juan Pérez', 2, 'A'),
+('Whiskers', 'Siames', 'F', 3, 4.25, 'Ana Gómez', 1, 'A'),
+('Chester', 'Pitbul', 'M', 2, 25.25, 'Pedro Suarez', 2, 'I');
 
 select * from tb_mascota;
 /*
@@ -83,8 +90,9 @@ CREATE TABLE IF NOT EXISTS tb_especialidad (
   id_especialidad int(11) NOT NULL AUTO_INCREMENT,
   des_especialidad varchar(100) NOT NULL,
   PRIMARY KEY (id_especialidad)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+/*drop table tb_especialidad;*/
 --
 -- Volcado de datos para la tabla tb_especialidad
 --
@@ -95,10 +103,9 @@ INSERT INTO tb_especialidad ( des_especialidad) VALUES
 ('Radiologia'),
 ( 'Traumatologia');
 
-INSERT INTO tb_mascota (nom_masco, raza, sexo, edad, peso_masco, propietario, id_especie, estado) VALUES
-('Firulais', 'Pastor Alemán', 'M', 5, 20.50, 'Juan Pérez', 2, 'A'),
-('Whiskers', 'Siames', 'F', 3, 4.25, 'Ana Gómez', 1, 'A'),
-('Chester', 'Pitbul', 'M', 2, 25.25, 'Pedro Suarez', 2, 'I');
+select * from tb_especialidad;
+
+
 
 
 create table tb_veterinario(
@@ -110,4 +117,8 @@ foreign key (id_especialidad) references tb_especialidad(id_especialidad),
 foreign key (id_usuario) references tb_usuario(id_usuario)
 );
 
-select * from tb_especialidad;
+insert into tb_veterinario (id_especialidad,id_usuario,estado) values
+	(2,1,'A'),
+    (1,2,'A');
+    
+select * from tb_veterinario ;
